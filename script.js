@@ -4,7 +4,8 @@ const canvas = document.createElement('canvas');
 const context = canvas.getContext('2d');
 const width = 500;
 const height = 700;
-const screenWidth = window.screen.width;
+//const screenWidth = window.screen.width;
+const screenWidth = body.clientWidth;
 const canvasPosition = screenWidth / 2 - width / 2;
 const isMobile = window.matchMedia('(max-width: 600px)');
 const gameOverEl = document.createElement('div');
@@ -89,9 +90,6 @@ const createCanvas = () => {
   body.appendChild(canvas);
   renderCanvas();
 };
-
-// Remove this
-createCanvas();
 
 // Reset Ball to Center
 const ballReset = () => {
@@ -205,6 +203,7 @@ const animate = () => {
   ballMove();
   ballBoundaries();
   computerAI();
+  window.requestAnimationFrame(animate);
 };
 
 // Start Game, Reset Everything
@@ -220,7 +219,6 @@ const startGame = () => {
   createCanvas();
   animate();
   canvas.addEventListener('mousemove', (e) => {
-    console.log(e.clientX);
     playerMoved = true;
     // Compensate for canvas being centered
     paddleBottomX = e.clientX - canvasPosition - paddleDiff;
@@ -236,4 +234,4 @@ const startGame = () => {
 };
 
 // On Load
-// startGame();
+startGame();
